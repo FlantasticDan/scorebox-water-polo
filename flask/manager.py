@@ -4,7 +4,7 @@ from typing import Dict
 
 import socketio
 
-from consoles.sports import WaterPoloDaktronics
+from consoles.sports import WaterPolo
 
 class WaterPoloManager:
     '''Water Polo Game State Manager'''
@@ -22,7 +22,7 @@ class WaterPoloManager:
         self.client_thread = Thread(target=self.socket_client)
         self.client_thread.start()
 
-        self.console = WaterPoloDaktronics(com_port)
+        self.console = WaterPolo(com_port)
         self.console.on_update = self.updater
     
     def updater(self, game_state):

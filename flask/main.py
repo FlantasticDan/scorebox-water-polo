@@ -49,6 +49,66 @@ def overlay():
 def update(payload):
     return emit('update', payload, broadcast=True)
 
+@app.route('/bar')
+def bar():
+    socketio.emit('display_mode', {'mode': 'live'})
+    return 'OK'
+
+@app.route('/1')
+def one():
+    global MANAGER
+    state = MANAGER.console.export()
+    state.update({
+        'mode': 'summary',
+        'tag': 'End of 1st'
+    })
+    socketio.emit('display_mode', state)
+    return 'OK'
+
+@app.route('/2')
+def two():
+    global MANAGER
+    state = MANAGER.console.export()
+    state.update({
+        'mode': 'summary',
+        'tag': 'Halftime'
+    })
+    socketio.emit('display_mode', state)
+    return 'OK'
+
+@app.route('/3')
+def three():
+    global MANAGER
+    state = MANAGER.console.export()
+    state.update({
+        'mode': 'summary',
+        'tag': 'End of 3rd'
+    })
+    socketio.emit('display_mode', state)
+    return 'OK'
+
+@app.route('/4')
+def four():
+    global MANAGER
+    state = MANAGER.console.export()
+    state.update({
+        'mode': 'summary',
+        'tag': 'Final'
+    })
+    socketio.emit('display_mode', state)
+    return 'OK'
+
+@app.route('/0')
+def zero():
+    global MANAGER
+    state = MANAGER.console.export()
+    state.update({
+        'mode': 'summary',
+        'tag': 'Starting Soon'
+    })
+    socketio.emit('display_mode', state)
+    return 'OK'
+
 if __name__ == '__main__':
     bundle(app)
     socketio.run(app, port=5000)
