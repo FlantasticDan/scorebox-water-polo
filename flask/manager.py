@@ -1,12 +1,14 @@
 from secrets import token_hex
+from threading import Thread
 
-from flask_socketio import SocketIO
+import socketio
+
 from consoles.sports import WaterPoloDaktronics
 
 class WaterPoloManager:
     '''Water Polo Game State Manager'''
-    def __init__(self, socketio: SocketIO, home_team, home_mascot, home_color, visitor_team, visitor_mascot, visitor_color, com_port) -> None:
-        self.socketio = socketio
+    def __init__(self, home_team, home_mascot, home_color, visitor_team, visitor_mascot, visitor_color, com_port) -> None:
+        self.nonce = token_hex(6)
 
         self.home_name = home_team
         self.home_mascot = home_mascot
@@ -15,11 +17,17 @@ class WaterPoloManager:
         self.visitor_mascot = visitor_mascot
         self.visitor_color = visitor_color
 
+        self.client = socketio.Client()
+        self.client_thread = Thread(target=self.socket_client)
+        self.client_thread.start()
+
         self.console = WaterPoloDaktronics(com_port)
         self.console.on_update = self.updater
     
-        self.nonce = token_hex(6)
-    
     def updater(self, game_state):
-        pass
-
+        if self.client.connected:
+            self.client.emit('update', game_state)
+        
+    def socket_client(self):
+        self.client.connect('http://localhost:5000')
+        self.client.wait()

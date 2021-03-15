@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, send_file
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 
 from images import Logos
 from manager import WaterPoloManager
@@ -9,7 +9,7 @@ LOGOS = Logos()
 MANAGER = None # WaterPoloManager
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet', logger=True, engineio_logger=True)
 
 @app.route('/setup')
 def setup():
@@ -20,7 +20,7 @@ def initialize():
     global LOGOS
     global MANAGER
     setup = request.form
-    MANAGER = WaterPoloManager(socketio, **setup)
+    MANAGER = WaterPoloManager(**setup)
     files = request.files
     LOGOS.set_home(files['home_logo'].read(), files['home_logo'].filename)
     LOGOS.set_visitor(files['visitor_logo'].read(), files['visitor_logo'].filename)
@@ -42,5 +42,9 @@ def visitor():
 def overlay():
     return render_template('overlay.html')
 
+@socketio.on('update')
+def update(payload):
+    return emit('update', payload, broadcast=True)
+
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, port=5000)
