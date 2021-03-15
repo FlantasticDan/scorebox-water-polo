@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, emit
 
 from images import Logos
 from manager import WaterPoloManager
+from bundle import bundle
 
 VERSION = 'v0.0.1 (03152021)'
 LOGOS = Logos()
@@ -49,4 +50,5 @@ def update(payload):
     return emit('update', payload, broadcast=True)
 
 if __name__ == '__main__':
+    bundle(app)
     socketio.run(app, port=5000)
