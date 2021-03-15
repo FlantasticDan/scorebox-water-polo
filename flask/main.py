@@ -4,7 +4,7 @@ from flask_socketio import SocketIO, emit
 from images import Logos
 from manager import WaterPoloManager
 
-VERSION = 'v0.0.1 (03142021)'
+VERSION = 'v0.0.1 (03152021)'
 LOGOS = Logos()
 MANAGER = None # WaterPoloManager
 

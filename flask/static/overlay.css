@@ -22,8 +22,7 @@ body{
     width: 100vw;
     height: 100vh;
     margin: 0;
-    background: url("https://i.ibb.co/WvkvqNz/Screenshot-2021-03-14-172224.png");
-    background-size: contain;
+    background: black;
 }
 
 #scorebox{
@@ -52,35 +51,35 @@ body{
     grid-template-rows: var(--name-row) var(--mascot-row);
 }
 
-.team-box.red{
+.team-box.red, .summary-box.red{
     background: var(--red);
 }
 
-.team-box.orange{
+.team-box.orange, .summary-box.orange{
     background: var(--orange);
 }
 
-.team-box.yellow{
+.team-box.yellow, .summary-box.yellow{
     background: var(--yellow);
 }
 
-.team-box.green{
+.team-box.green, .summary-box.green{
     background: var(--green);
 }
 
-.team-box.blue{
+.team-box.blue, .summary-box.blue{
     background: var(--blue);
 }
 
-.team-box.purple{
+.team-box.purple, .summary-box.purple{
     background: var(--purple);
 }
 
-.team-box.gold{
+.team-box.gold, .summary-box.gold{
     background: var(--gold);
 }
 
-.team-box.silver{
+.team-box.silver, .summary-box.silver{
     background: var(--silver);
 }
 
@@ -132,7 +131,7 @@ body{
     text-align: right;
 }
 
-#home .team-logo{
+#home .team-logo, .home.team-logo{
     background-image: url("/home");
 }
 
@@ -141,7 +140,7 @@ body{
     text-align: left;
 }
 
-#visitor .team-logo{
+#visitor .team-logo, .visitor.team-logo{
     background-image: url("/visitor");
 }
 

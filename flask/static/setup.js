@@ -144,7 +144,7 @@ function setup(e) {
             cache: 'no-cache',
             body: payload
         }).then(res => {
-            window.location.href = `/admin`
+            window.location.href = `/overlay`
         })
     }
 }
