@@ -52,6 +52,38 @@ body{
     grid-template-rows: var(--name-row) var(--mascot-row);
 }
 
+.team-box.red{
+    background: var(--red);
+}
+
+.team-box.orange{
+    background: var(--orange);
+}
+
+.team-box.yellow{
+    background: var(--yellow);
+}
+
+.team-box.green{
+    background: var(--green);
+}
+
+.team-box.blue{
+    background: var(--blue);
+}
+
+.team-box.purple{
+    background: var(--purple);
+}
+
+.team-box.gold{
+    background: var(--gold);
+}
+
+.team-box.silver{
+    background: var(--silver);
+}
+
 .team-logo{
     grid-area: logo;
     height: 100%;
@@ -59,7 +91,6 @@ body{
     vertical-align: middle;
     padding: 0;
     margin: 0;
-    background: url("https://picsum.photos/256");
     background-size: cover;
     aspect-ratio: 1/1;
     font-family: 'Open Sans';
@@ -97,15 +128,21 @@ body{
 }
 
 #home{
-    background: var(--red);
     grid-template-areas: "logo name score" "logo mascot score";
     text-align: right;
 }
 
+#home .team-logo{
+    background-image: url("/home");
+}
+
 #visitor{
-    background: var(--silver);
     grid-template-areas: "score name logo" "score mascot logo";
     text-align: left;
+}
+
+#visitor .team-logo{
+    background-image: url("/visitor");
 }
 
 #clock{

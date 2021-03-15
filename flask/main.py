@@ -9,7 +9,7 @@ LOGOS = Logos()
 MANAGER = None # WaterPoloManager
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet', logger=True, engineio_logger=True)
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet', logger=False, engineio_logger=False)
 
 @app.route('/setup')
 def setup():
@@ -40,7 +40,9 @@ def visitor():
 
 @app.route('/overlay')
 def overlay():
-    return render_template('overlay.html')
+    global MANAGER
+    if MANAGER:
+        return render_template('overlay.html', **MANAGER.overlay_export())
 
 @socketio.on('update')
 def update(payload):

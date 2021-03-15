@@ -1,5 +1,6 @@
 from secrets import token_hex
 from threading import Thread
+from typing import Dict
 
 import socketio
 
@@ -31,3 +32,13 @@ class WaterPoloManager:
     def socket_client(self):
         self.client.connect('http://localhost:5000')
         self.client.wait()
+
+    def overlay_export(self) -> Dict:
+        return {
+            'home_name': self.home_name,
+            'home_mascot': self.home_mascot,
+            'home_color': self.home_color,
+            'visitor_name': self.visitor_name,
+            'visitor_mascot': self.visitor_mascot,
+            'visitor_color': self.visitor_color,
+        }
