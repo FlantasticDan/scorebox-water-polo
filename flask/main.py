@@ -5,7 +5,7 @@ from images import Logos
 from manager import WaterPoloManager
 from bundle import bundle
 
-VERSION = 'v0.0.1 (03152021)'
+VERSION = 'v0.0.2 (03152021)'
 LOGOS = Logos()
 MANAGER = None # WaterPoloManager
 
@@ -108,6 +108,10 @@ def zero():
     })
     socketio.emit('display_mode', state)
     return 'OK'
+
+@app.route('/admin')
+def admin():
+    return app.send_static_file("admin.html")
 
 if __name__ == '__main__':
     bundle(app)
