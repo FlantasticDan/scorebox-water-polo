@@ -134,6 +134,8 @@ function setup(e) {
         payload.append('home_logo', homeLogo.files[0])
         payload.append('visitor_logo', visitorLogo.files[0])
 
+        payload.append('com_port', comPort.value)
+
         // let u = new URL(window.location.href)
         // let key = u.searchParams.get('key') 
 

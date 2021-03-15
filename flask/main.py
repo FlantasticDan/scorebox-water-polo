@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, send_file
 from flask_socketio import SocketIO
 
-from consoles.sports import WaterPoloDaktronics
-
 from images import Logos
+from manager import WaterPoloManager
 
 VERSION = 'v0.0.1 (03142021)'
 LOGOS = Logos()
+MANAGER = None # WaterPoloManager
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
@@ -18,7 +18,9 @@ def setup():
 @app.route('/init', methods=['POST'])
 def initialize():
     global LOGOS
+    global MANAGER
     setup = request.form
+    MANAGER = WaterPoloManager(socketio, **setup)
     files = request.files
     LOGOS.set_home(files['home_logo'].read(), files['home_logo'].filename)
     LOGOS.set_visitor(files['visitor_logo'].read(), files['visitor_logo'].filename)
