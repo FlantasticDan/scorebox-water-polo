@@ -12,6 +12,7 @@
     --light-grey: #6E6E6E;
     --dark-grey: #282828;
     --box-height: 4vw;
+    --box-width: 60vw;
     --box-border: 0.25vw;
     --name-row: 1.25vw;
     --mascot-row: 2.25vw;
@@ -26,7 +27,7 @@ body{
 }
 
 #scorebox{
-    width: 60vw;
+    width: var(--box-width);
     height: var(--box-height);
     position: absolute;
     bottom: 5vh;
@@ -109,7 +110,7 @@ body{
 
 #clock{
     background: var(--dark-grey);
-    width: 6vw;
+    width: 5.5vw;
     display: grid;
     place-items: center;
     grid-template-columns: 1fr 1fr;
