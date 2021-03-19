@@ -5,7 +5,7 @@ from images import Logos
 from manager import WaterPoloManager
 from bundle import bundle
 
-VERSION = 'v0.0.2 (03152021)'
+VERSION = 'v1.0.0 (03192021/CTS)'
 LOGOS = Logos()
 MANAGER = None # WaterPoloManager
 

@@ -4,7 +4,7 @@ from typing import Dict
 
 import socketio
 
-from consoles.sports import WaterPolo
+from consoles.sports import WaterPolo, WaterPoloDaktronics
 
 class WaterPoloManager:
     '''Water Polo Game State Manager'''
