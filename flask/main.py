@@ -5,7 +5,7 @@ from images import Logos
 from manager import WaterPoloManager
 from bundle import bundle
 
-VERSION = 'v1.0.0 (03192021/CTS)'
+VERSION = 'v2.0.0 (10062021/CTS)'
 LOGOS = Logos()
 MANAGER = None # WaterPoloManager
 
@@ -43,7 +43,7 @@ def visitor():
 def overlay():
     global MANAGER
     if MANAGER:
-        return render_template('overlay.html', **MANAGER.overlay_export())
+        return render_template('overlay.html', remote=MANAGER.remote, source=MANAGER.source, **MANAGER.overlay_export())
 
 @socketio.on('update')
 def update(payload):

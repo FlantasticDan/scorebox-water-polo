@@ -3,8 +3,13 @@ from threading import Thread
 from typing import Dict
 
 import socketio
+import httpx
 
 from consoles.sports import WaterPolo, WaterPoloDaktronics
+
+def is_string_ip(string: str) -> bool:
+    octets = string.split('.')
+    return len(octets) == 4
 
 class WaterPoloManager:
     '''Water Polo Game State Manager'''
@@ -18,12 +23,19 @@ class WaterPoloManager:
         self.visitor_mascot = visitor_mascot
         self.visitor_color = visitor_color
 
-        self.client = socketio.Client()
-        self.client_thread = Thread(target=self.socket_client)
-        self.client_thread.start()
+        self.remote = is_string_ip(com_port)
+        self.source = com_port
 
-        self.console = WaterPolo(com_port)
-        self.console.on_update = self.updater
+        if not self.remote:
+            self.client = socketio.Client()
+            self.client_thread = Thread(target=self.socket_client)
+            self.client_thread.start()
+
+            self.console = WaterPolo(com_port)
+            self.console.on_update = self.updater
+
+        else:
+            httpx.get(f'http://{self.source}:9876/init/waterpolo')
     
     def updater(self, game_state):
         if self.client.connected:

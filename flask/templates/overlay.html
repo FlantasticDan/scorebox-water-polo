@@ -70,6 +70,27 @@
 
         <script src="/static/third-party/socket.io.min.js"></script>
         <script src="/static/overlay.js"></script>
+        <script>
+            {% if not remote %}
+                socket.on('update', payload => {
+                    homeScore.innerText = payload.home_score
+                    visitorScore.innerText = payload.visitor_score
+                    gameClock.innerText = payload.clock
+                    shotClock.innerText = payload.shot
+                    period.innerText = payload.period
+                })
+
+            {% else %}
+                source = io("{{source}}:9876")
+                source.on('update', payload => {
+                    homeScore.innerText = payload.home_score
+                    visitorScore.innerText = payload.visitor_score
+                    gameClock.innerText = payload.clock
+                    shotClock.innerText = payload.shot
+                    period.innerText = payload.period
+                })
+            {% endif %}
+        </script>
 
     </body>
 

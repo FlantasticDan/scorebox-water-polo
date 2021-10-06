@@ -14,14 +14,6 @@ const scorestate = document.getElementById('scorestate')
 
 const socket = io()
 
-socket.on('update', payload => {
-    homeScore.innerText = payload.home_score
-    visitorScore.innerText = payload.visitor_score
-    gameClock.innerText = payload.clock
-    shotClock.innerText = payload.shot
-    period.innerText = payload.period
-})
-
 socket.on('display_mode', payload => {
     console.log(payload)
     if (payload.mode == 'live')
