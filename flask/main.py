@@ -5,7 +5,7 @@ from images import Logos
 from manager import WaterPoloManager
 from bundle import bundle
 
-VERSION = 'v2.0.0 (10062021/CTS)'
+VERSION = 'v2.1.0 (11042021/CTS)'
 LOGOS = Logos()
 MANAGER = None # WaterPoloManager
 
@@ -49,69 +49,39 @@ def overlay():
 def update(payload):
     return emit('update', payload, broadcast=True)
 
-@app.route('/bar')
-def bar():
-    socketio.emit('display_mode', {'mode': 'live'})
-    return 'OK'
-
-@app.route('/1')
-def one():
-    global MANAGER
-    state = MANAGER.console.export()
-    state.update({
-        'mode': 'summary',
-        'tag': 'End of 1st'
-    })
-    socketio.emit('display_mode', state)
-    return 'OK'
-
-@app.route('/2')
-def two():
-    global MANAGER
-    state = MANAGER.console.export()
-    state.update({
-        'mode': 'summary',
-        'tag': 'Halftime'
-    })
-    socketio.emit('display_mode', state)
-    return 'OK'
-
-@app.route('/3')
-def three():
-    global MANAGER
-    state = MANAGER.console.export()
-    state.update({
-        'mode': 'summary',
-        'tag': 'End of 3rd'
-    })
-    socketio.emit('display_mode', state)
-    return 'OK'
-
-@app.route('/4')
-def four():
-    global MANAGER
-    state = MANAGER.console.export()
-    state.update({
-        'mode': 'summary',
-        'tag': 'Final'
-    })
-    socketio.emit('display_mode', state)
-    return 'OK'
-
-@app.route('/0')
-def zero():
-    global MANAGER
-    state = MANAGER.console.export()
-    state.update({
-        'mode': 'summary',
-        'tag': 'Starting Soon'
-    })
-    socketio.emit('display_mode', state)
-    return 'OK'
-
 @app.route('/admin')
 def admin():
-    return app.send_static_file("admin.html")
+    global MANAGER
+    return render_template("admin.html", version=VERSION, remote=MANAGER.remote, source=MANAGER.source, **MANAGER.overlay_export())
+
+@socketio.on('status-request')
+def status_request(data):
+    global MANAGER
+    return emit('status', MANAGER.status_export())
+
+@socketio.on('alert-mode-status')
+def alert_mode_status(data):
+    global MANAGER
+    MANAGER.set_alert_mode(data)
+    return emit('status', MANAGER.status_export(), broadcast=True)
+
+@socketio.on('alert-visibility-status')
+def alert_mode_status(data):
+    global MANAGER
+    MANAGER.set_alert_visibility(data)
+    return emit('status', MANAGER.status_export(), broadcast=True)
+
+@socketio.on('alert-text-status')
+def alert_mode_status(data):
+    global MANAGER
+    MANAGER.set_alert_text(data)
+    return emit('status', MANAGER.status_export(), broadcast=True)
+
+@socketio.on('display-mode-status')
+def display_mode(data):
+    global MANAGER
+    MANAGER.set_display_mode(data)
+    return emit('status', MANAGER.status_export(), broadcast=True)
 
 if __name__ == '__main__':
     bundle(app)

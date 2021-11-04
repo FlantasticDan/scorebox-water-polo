@@ -9,24 +9,109 @@ const visitorSummaryScore = document.getElementById('visitor-summary-score')
 const summaryTag = document.getElementById('summary-tag')
 
 const scorebox = document.getElementById('scorebox')
-
 const scorestate = document.getElementById('scorestate')
+
+const homeAlert = document.getElementById('home-alert')
+const visitorAlert = document.getElementById('visitor-alert')
+const neutralAlert = document.getElementById('neutral-alert')
 
 const socket = io()
 
-socket.on('display_mode', payload => {
-    console.log(payload)
-    if (payload.mode == 'live')
+socket.on('status', payload => {
+    statusObject = payload
+    StatusUpdate()
+})
+
+function StatusUpdate() {
+    if (statusObject.alert_visibility == 'off')
     {
-        scorebox.classList.remove('hide')
-        scorestate.classList.add('hide')
+        HideAlerts()
+    }
+    else {
+        if (statusObject.alert_visibility == 'on')
+        {
+            ProcessAlert()
+        }
+    }
+    
+    ProcessDisplayMode()
+}
+
+function HideAlerts() {
+    visitorAlert.classList.add('hidden')
+    homeAlert.classList.add('hidden')
+    neutralAlert.classList.add('hidden')
+}
+
+function ProcessAlert() {
+    HideAlerts()
+    switch (statusObject.alert_mode)
+    {
+        case 'home':
+            homeAlert.innerText = statusObject.alert_text
+            homeAlert.classList.remove('hidden')
+            break
+        case 'visitor':
+            visitorAlert.innerText = statusObject.alert_text
+            visitorAlert.classList.remove('hidden')
+            break
+        case 'neutral':
+            neutralAlert.innerText = statusObject.alert_text
+            neutralAlert.classList.remove('hidden')
+            break
+        default:
+            break
+    }
+}
+
+function ScoreBoxOut() {
+    scorebox.classList.add('out')
+    neutralAlert.classList.add('out')
+    homeAlert.classList.add('out')
+    visitorAlert.classList.add('out')
+
+    scorestate.classList.remove('out')
+}
+
+function ScoreBoxIn() {
+    scorebox.classList.remove('out')
+    neutralAlert.classList.remove('out')
+    homeAlert.classList.remove('out')
+    visitorAlert.classList.remove('out')
+
+    scorestate.classList.add('out')
+}
+
+function ProcessDisplayMode() {
+    homeSummaryScore.innerText = homeScore.innerText
+    visitorSummaryScore.innerText = visitorScore.innerText
+
+    if (statusObject.display_mode == 'live')
+    {
+        ScoreBoxIn()
     }
     else
     {
-        homeSummaryScore.innerText = payload.home_score
-        visitorSummaryScore.innerText = payload.visitor_score
-        summaryTag.innerText = payload.tag
-        scorebox.classList.add('hide')
-        scorestate.classList.remove('hide')
+        switch (statusObject.display_mode)
+        {
+            case 'start':
+                summaryTag.innerText = 'Starting Soon'
+                break
+            case 'first':
+                summaryTag.innerText = 'End of 1st'
+                break
+            case 'half':
+                summaryTag.innerText = 'Halftime'
+                break
+            case 'third':
+                summaryTag.innerText = 'End of 3rd'
+                break
+            case 'final':
+                summaryTag.innerText = 'Final'
+                break
+            default:
+                break
+        }
+        ScoreBoxOut()
     }
-})
+}

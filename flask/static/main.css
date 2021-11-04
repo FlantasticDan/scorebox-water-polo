@@ -96,7 +96,7 @@ h2{
     width: fit-content;
     max-width: 600px;
     margin: 2em auto auto;
-    place-items: center;
+    align-items: center;
     gap: 2em 1em;
 }
 
@@ -260,6 +260,14 @@ button.toggle.toggled{
     box-sizing: border-box;
 }
 
+.toggle-container.three{
+    grid-template-columns: 1fr repeat(3, auto);
+}
+
+.toggle-container.six{
+    grid-template-columns: 1fr repeat(6, auto);
+}
+
 .toggle-prompt{
     margin: auto auto auto 0;
 }
@@ -383,4 +391,142 @@ button.toggle.toggled{
 #header-chrome #status-indicator{
     width: 100%;
     text-align: right;
+}
+
+.dash-contents{
+    padding: 1em;
+}
+
+.dash-contents h3{
+    margin: 0 0 .25em;
+    font-size: 2.25em;
+}
+
+#touchdown-buttons{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+}
+
+iframe{
+    width: 100%;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+    padding: 1em;
+    height: 18em;
+    overflow: hidden;
+}
+
+.raw-data{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(5, 1fr);
+    font-family: 'Source Sans Pro';
+    text-align: center;
+}
+
+.raw-data-item{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+}
+
+.raw-data-header{
+    font-weight: 700;
+}
+
+.raw-data-content{
+    font-family: 'Source Code Pro';
+}
+
+.text-input label {
+    display: block;
+    font-family: 'Source Sans Pro';
+    color: var(--mid-grey);
+    font-size: 1.15em;
+    letter-spacing: 0.15em;
+}
+
+.text-input {
+    width: 100%;
+    padding: 0.5em;
+}
+
+.text-input input {
+    width: 100%;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    font-family: 'Open Sans';
+    font-weight: 700;
+    color: white;
+    outline: 0px;
+    border: 4px solid var(--less-dark-grey);
+    padding: 0.2em;
+    box-sizing: border-box;
+    background-color: var(--less-dark-grey);
+}
+
+.text-input-preview {
+    width: 100%;
+    border: 4px solid var(--less-dark-grey);
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.text-input-title {
+    font-size: 1.35em;
+    text-transform: uppercase;
+    font-family: 'Open Sans';
+    font-weight: 700;
+}
+
+.text-input-caption {
+    letter-spacing: 0.15em;
+    color: var(--mid-grey);
+}
+
+#flag-controls{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    gap: 2em;
+}
+
+.flag-stack{
+    display: grid;
+    place-items: center;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.flag-stack .top-row{
+    grid-column: 1/3;
+}
+
+.alert-stack{
+    display: grid;
+    place-items: center;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.alert-stack .top-row{
+    grid-column: 1/4;
+}
+
+.dash-row{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#alert-controls{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    place-items: center;
+    gap: 2em;
 }

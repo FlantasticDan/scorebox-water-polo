@@ -23,6 +23,11 @@ class WaterPoloManager:
         self.visitor_mascot = visitor_mascot
         self.visitor_color = visitor_color
 
+        self.alert_mode = 'neutral'
+        self.alert_visibility = 'off'
+        self.alert_text = ''
+        self.display_mode = 'live'
+
         self.remote = is_string_ip(com_port)
         self.source = com_port
 
@@ -54,3 +59,24 @@ class WaterPoloManager:
             'visitor_mascot': self.visitor_mascot,
             'visitor_color': self.visitor_color,
         }
+    
+    def status_export(self) -> Dict:
+        return {
+            'alert_mode': self.alert_mode,
+            'alert_visibility': self.alert_visibility,
+            'alert_text': self.alert_text,
+            'display_mode': self.display_mode
+        }
+
+    def set_alert_mode(self, new_status) -> None:
+        self.alert_mode = new_status
+    
+    def set_alert_visibility(self, new_status) -> None:
+        self.alert_visibility = new_status
+    
+    def set_alert_text(self, new_status) -> None:
+        self.alert_text = new_status
+        self.alert_visibility = 'on'
+    
+    def set_display_mode(self, new_mode) -> None:
+        self.display_mode = new_mode

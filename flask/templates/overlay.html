@@ -13,8 +13,16 @@
     </head>
 
     <body>
+        <div class="alert-box hidden animate-out" id="neutral-alert">
+        </div>
 
-        <div id="scorebox">
+        <div class="alert-box team-alert home-alert bg {{home_color}} hidden animate-out" id="home-alert">
+        </div>
+
+        <div class="alert-box team-alert visitor-alert bg {{visitor_color}} hidden animate-out" id="visitor-alert">
+        </div>
+
+        <div id="scorebox" class="animate-out">
             <div id="home" class="team-box {{home_color}}">
                 <div class="team-logo">
                 </div>
@@ -32,11 +40,13 @@
                 <div id="game-clock">
                     4:29
                 </div>
-                <div id="shot-clock">
-                    14
-                </div>
-                <div id="period">
-                    1st
+                <div class="clock-row">
+                    <div id="shot-clock">
+                        14
+                    </div>
+                    <div id="period">
+                        1st
+                    </div>
                 </div>
             </div>
             <div id="visitor" class="team-box {{visitor_color}}">
@@ -54,7 +64,7 @@
             </div>
         </div>
 
-        <div id="scorestate" class="hide">
+        <div id="scorestate" class="animate-out out">
             <div class="summary-box {{home_color}}">
                 <div class="home summary-logo"></div>
                 <div class="summary-score" id="home-summary-score">0</div>

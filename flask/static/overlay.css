@@ -16,6 +16,7 @@
     --box-border: 0.25vw;
     --name-row: 1.25vw;
     --mascot-row: 2.25vw;
+    --bottom-offset: 5vh;
 }
 
 body{
@@ -23,13 +24,14 @@ body{
     height: 100vh;
     margin: 0;
     background: black;
+    overflow: hidden;
 }
 
 #scorebox{
     width: var(--box-width);
     height: var(--box-height);
     position: absolute;
-    bottom: 5vh;
+    bottom: var(--bottom-offset);
     left: 20vw;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -41,45 +43,134 @@ body{
     box-sizing: border-box;
     font-family: 'Open Sans';
     color: white;
+    transition: border-color 0.5s, bottom 0.5s;
+}
+
+#clock{
+    background: var(--dark-grey);
+    width: 7vw;
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--mascot-row) var(--name-row);
+}
+
+#game-clock{
+    /* grid-area: clock; */
+    font-size: 1.55vw;
+    font-weight: 600;
+    padding-bottom: 0.45vw;
+}
+
+#shot-clock{
+    /* grid-area: shot; */
+    padding-bottom: 0.45vw;
+    font-size: 1.25vw;
+    font-weight: 700;
+    color: #edab40;
+}
+
+#shot-clock.red{
+    color: #ed4040
+}
+
+#period{
+    /* grid-area: period; */
+    padding-bottom: 0.25vw;
+    font-size: 1.05vw;
+    font-weight: 500;
+}
+
+.clock-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    text-align: center;
+}
+
+.alert-box{
+    width: var(--box-width);
+    height: calc(var(--name-row) + 0.25vw);
+    position: absolute;
+    bottom: calc(var(--box-height) + var(--bottom-offset));
+    left: 20vw;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    font-size: 1vw;
+    font-family: 'Open Sans';
+    font-weight: 700;
+    text-transform: uppercase;
+    transform: translateY(0vw);
+    transition: transform 0.5s, bottom 0.5s;
+    color: white;
+    background-color: var(--light-grey);
+}
+
+.alert-box.hidden{
+    transform: translateY(calc(var(--name-row) + 0.25vw));
+}
+
+.alert-box.team-alert{
+    width: 25vw;
+}
+
+.alert-box.team-flag{
+    width: 25vw;
+    background-color: var(--flag-yellow);
+    color: var(--dark-grey);
+    transform: translateY(calc(var(--name-row) + 0.25vw));
+}
+
+.alert-box.home-alert{
+    left: 20vw
+}
+
+.alert-box.visitor-alert{
+    right: 20vw;
+    left: unset;
+}
+
+.letter-spacing-bug{
+    opacity: 0;
 }
 
 .team-box{
     width: 100%;
     display: grid;
     place-items: center;
-    grid-template-columns: auto 1fr auto;
     grid-template-rows: var(--name-row) var(--mascot-row);
 }
 
-.team-box.red, .summary-box.red{
+.team-box.red, .summary-box.red, .touchdown.red, .bg.red{
     background: var(--red);
 }
 
-.team-box.orange, .summary-box.orange{
+.team-box.orange, .summary-box.orange, .touchdown.orange, .bg.orange{
     background: var(--orange);
 }
 
-.team-box.yellow, .summary-box.yellow{
+.team-box.yellow, .summary-box.yellow, .touchdown.yellow, .bg.yellow{
     background: var(--yellow);
 }
 
-.team-box.green, .summary-box.green{
+.team-box.green, .summary-box.green, .touchdown.green, .bg.green{
     background: var(--green);
 }
 
-.team-box.blue, .summary-box.blue{
+.team-box.blue, .summary-box.blue, .touchdown.blue, .bg.blue{
     background: var(--blue);
 }
 
-.team-box.purple, .summary-box.purple{
+.team-box.purple, .summary-box.purple, .touchdown.purple, .bg.purple{
     background: var(--purple);
 }
 
-.team-box.gold, .summary-box.gold{
+.team-box.gold, .summary-box.gold, .touchdown.gold, .bg.gold{
     background: var(--gold);
 }
 
-.team-box.silver, .summary-box.silver{
+.team-box.silver, .summary-box.silver, .touchdown.silver, .bg.silver{
     background: var(--silver);
 }
 
@@ -128,6 +219,7 @@ body{
 
 #home{
     grid-template-areas: "logo name score" "logo mascot score";
+    grid-template-columns: auto 1fr auto;
     text-align: right;
 }
 
@@ -137,6 +229,7 @@ body{
 
 #visitor{
     grid-template-areas: "score name logo" "score mascot logo";
+    grid-template-columns: auto 1fr auto;
     text-align: left;
 }
 
@@ -144,44 +237,17 @@ body{
     background-image: url("/visitor");
 }
 
-#clock{
-    background: var(--dark-grey);
-    width: 5.5vw;
-    display: grid;
-    place-items: center;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: var(--mascot-row) var(--name-row);
-    grid-template-areas: "clock clock" "shot period";
-}
-
-#game-clock{
-    grid-area: clock;
-    font-size: 1.85vw;
-    font-weight: 600;
-    padding-bottom: 0.45vw;
-}
-
-#shot-clock{
-    grid-area: shot;
-    padding-bottom: 0.35vw;
-    font-size: 1.25vw;
-    font-weight: 700;
-    color: #edab40;
-}
-
-#period{
-    grid-area: period;
-    padding-bottom: 0.35vw;
-    font-size: 1.25vw;
-    font-weight: 500;
+.hide{
+    display: none;
+    opacity: 0;
 }
 
 #scorestate{
     width: 10.5vw;
     height: 12vw;
     position: absolute;
-    bottom: 5vh;
-    left: 5vh;
+    bottom: var(--bottom-offset);
+    left: var(--bottom-offset);
     display: grid;
     grid-template-columns: 1fr;
     gap: 0;
@@ -237,9 +303,18 @@ body{
     place-content: center;
     font-size: 1.2vw;
     color: #edab40;
+    text-transform: uppercase;
 }
 
-.hide{
-    display: none;
-    opacity: 0;
+.animate-out{
+    transition: bottom 0.5s, left 0.5s, transform 0.5s;
+}
+
+div.animate-out.out{
+    bottom: calc(var(--bottom-offset) * -1 - var(--box-height)) !important;
+}
+
+#scorestate.animate-out.out{
+    bottom: var(--bottom-offset) !important;
+    left: calc(var(--bottom-offset) * -1 - 10.5vw);
 }
